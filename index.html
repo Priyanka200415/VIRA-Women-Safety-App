@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VIRA — Personal Safety</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{ --primary:#FF6B81; --accent:#0F766E; --bg:#FFF8F2; --muted:#54606E; --danger:#E03B3B; --radius:12px; --card-shadow: 0 10px 30px rgba(15,118,110,0.06); }
+    *{box-sizing:border-box} body{ margin:0; font-family:Inter,system-ui,Arial; background:linear-gradient(180deg,var(--bg),#fff); color:#0f1720; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    .container{ max-width:1100px; margin:20px auto; padding:18px; }
+    .top{ display:flex; gap:12px; align-items:center; margin-bottom:18px; }
+    .brand{ width:56px; height:56px; border-radius:12px; background:linear-gradient(135deg,#FF9AA8,var(--primary)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-family:Poppins; }
+    .subtitle{ color:var(--muted); font-size:13px; margin-top:4px; }
+    .grid{ display:grid; grid-template-columns: 1fr 380px; gap:18px; }
+    .card{ background:#fff; border-radius:var(--radius); padding:16px; box-shadow:var(--card-shadow); }
+    h3{ margin:0 0 10px 0; font-family:Poppins; color:var(--accent); }
+    .center{ display:flex; justify-content:center; align-items:center; padding:8px 0; }
+    .fab{ width:110px; height:110px; border-radius:50%; background: radial-gradient(circle at 30% 30%, #FF9AA8,var(--primary)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:20px; border:none; cursor:pointer; box-shadow:0 20px 40px rgba(224,59,59,0.12); }
+    .muted{ color:var(--muted); font-size:13px; }
+    .longpress{ height:54px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:#fff7f7; border:1px dashed #ffe6ea; cursor:pointer; color:#b94b5a; }
+    .contact-pill{ background:#fff3f4; border-radius:999px; padding:6px 10px; font-size:13px; display:inline-flex; gap:8px; align-items:center; border:1px solid #ffe6ea; }
+    .input-row{ display:flex; gap:8px; align-items:center; margin-top:8px; }
+    input, button{ font-size:14px; }
+    .log-list{ max-height:260px; overflow:auto; padding-right:6px; }
+    .log-item{ background:linear-gradient(180deg,#ffffff,#fbfbfb); border-radius:10px; padding:10px; margin-bottom:10px; border:1px solid #f1f1f1; font-size:13px; }
+    .time{ color:var(--muted); font-size:12px; margin-top:6px; }
+    @media (max-width:980px){ .grid{ grid-template-columns: 1fr; } }
+    footer{ margin-top:18px; color:var(--muted); font-size:13px; text-align:center; }
+    /* overlay */
+    #overlay{ z-index:999999; pointer-events:auto; display:none; align-items:center; justify-content:center; position:fixed; inset:0; background:rgba(0,0,0,.35); }
+    #overlay-inner{ pointer-events:auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top">
+      <div class="brand">V</div>
+      <div>
+        <h1>VIRA</h1>
+        <div class="subtitle">Personal safety — notify contacts, save incidents, and call your emergency number.</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- left -->
+      <div>
+        <div class="card">
+          <h3>Emergency</h3>
+          <div class="center"><button id="sosBtn" class="fab">SOS</button></div>
+          <div id="status" class="muted">Status: Ready</div>
+          <hr style="border:none;border-top:1px solid #faf0f0;margin:12px 0">
+          <div>
+            <label style="font-weight:600">Long-press area (hold 3.5s)</label>
+            <div id="longpress" class="longpress" tabindex="0" style="margin-top:8px">Hold here for discreet SOS</div>
+          </div>
+          <div style="margin-top:12px">
+            <label style="font-weight:600">Decoy PIN (discreet SOS)</label>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <input id="pin" type="password" placeholder="Enter PIN" style="flex:1;padding:10px;border-radius:8px;border:1px solid #eee" />
+              <button id="pinUnlock" class="btn" style="background:var(--accent);color:#fff;border-radius:8px;padding:10px 12px;border:none">Unlock</button>
+            </div>
+            <div class="muted" style="margin-top:8px">Enter your decoy PIN to trigger a discreet alert instead of normal unlock.</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3>Incident log (local)</h3>
+          <div class="log-list" id="logList" style="margin-top:8px"></div>
+          <div style="display:flex;gap:10px;margin-top:12px">
+            <button id="clearLog" class="btn" style="flex:1;background:#f2f2f2;border:1px solid #eee;color:#111">Clear Log</button>
+            <button id="exportLog" class="btn" style="flex:1;background:var(--accent);color:#fff">Export</button>
+          </div>
+          <div class="muted" style="margin-top:8px">Incidents are stored locally and posted to the server if configured.</div>
+        </div>
+      </div>
+
+      <!-- right -->
+      <div>
+        <div class="card" style="margin-bottom:14px">
+          <h3>Emergency Contacts</h3>
+          <div class="input-row">
+            <input id="contactInput" type="text" placeholder="+91..." />
+            <button id="addContactBtn" class="btn" style="background:var(--accent);color:#fff">Add</button>
+          </div>
+          <div class="contacts" id="contactsList" style="margin-top:12px"></div>
+          <div class="muted" style="margin-top:10px">Contacts are used for SMS/share message and/or server-driven calls.</div>
+        </div>
+
+        <div class="card" style="margin-bottom:14px">
+          <h3>Emergency Number (auto-dial)</h3>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input id="emNumber" type="tel" placeholder="+91..." value="" style="flex:1;padding:10px;border-radius:8px;border:1px solid #eee" />
+            <button id="saveNumber" class="btn" style="background:var(--accent);color:#fff">Save</button>
+          </div>
+          <div class="muted" style="margin-top:8px">When SOS is confirmed, the app will attempt to open the phone dialer with this number. For automatic server calls, enable Twilio on the server.</div>
+        </div>
+
+        <div class="card">
+          <h3>About VIRA</h3>
+          <p class="muted">VIRA notifies trusted contacts with your location and opens the phone dialer to your emergency number. If you have a Twilio-enabled backend, server can place calls/SMS automatically.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>© 2025 VIRA — Built by Priyanka</footer>
+  </div>
+
+  <!-- overlay -->
+  <div id="overlay">
+    <div id="overlay-inner" style="background:#fff;padding:18px;border-radius:12px;text-align:center;width:90%;max-width:420px;">
+      <h3 style="color:var(--accent);margin:0 0 8px 0">Help is being notified</h3>
+      <p class="muted" style="margin:0 0 10px 0">A message will be prepared for your emergency contacts. Cancel within <span id="countdown">5</span>s</p>
+      <div style="display:flex;gap:8px;justify-content:center">
+        <button id="cancelBtn" class="btn" style="background:#fff;border:1px solid #eee;color:#111;padding:8px 12px;border-radius:8px">Cancel</button>
+        <button id="confirmBtn" class="btn" style="background:var(--danger);color:#fff;padding:8px 12px;border-radius:8px">Force Alert</button>
+      </div>
+      <div id="overlayNotice" style="margin-top:8px;color:var(--muted);font-size:13px"></div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

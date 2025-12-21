@@ -1,0 +1,1 @@
+<?php $host="127.0.0.1"; $user="root"; $pass=""; $dbname="mysql"; $m=@new mysqli($host,$user,$pass,$dbname); if($m->connect_errno){ echo "CONNECT ERROR: ".$m->connect_errno." - ".$m->connect_error; exit; } echo "CONNECTED OK, server version: ".$m->server_version; $m->close(); ?>
