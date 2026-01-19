@@ -2,6 +2,10 @@
 
 VIRA is a women's safety application designed to provide quick emergency assistance through SOS alerts, live location sharing, and emergency contact notification.  
 The project focuses on real-life safety situations where immediate help is required.
+
+## Contributors
+-Priyanka Priyadarsani Das
+-Ishika Bandopadhyay
 ## Features
 - One-tap SOS alert
 - Live GPS location sharing
@@ -50,5 +54,6 @@ This follows industry-level secure development practices.
 3. Install dependencies:
    ```bash
    npm install
+
 
 
