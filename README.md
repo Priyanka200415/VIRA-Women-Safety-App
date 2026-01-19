@@ -13,6 +13,13 @@ The project focuses on real-life safety situations where immediate help is requi
 - Emergency contact notification
 - Local incident logging
 - Simple and user-friendly interface
+  
+## Contributions
+- Assisted in integrating location-based features for real-time assistance
+- Contributed to project documentation and usability improvements
+- Participated in testing and debugging to ensure reliable performance
+- Improved UI responsiveness and accessibility
+  
 ## Technologies Used
 
 ### Frontend
@@ -55,6 +62,7 @@ This follows industry-level secure development practices.
 3. Install dependencies:
    ```bash
    npm install
+
 
 
 
