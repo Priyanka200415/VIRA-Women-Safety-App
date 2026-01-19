@@ -5,6 +5,7 @@ The project focuses on real-life safety situations where immediate help is requi
 
 ## Contributors
 -Priyanka Priyadarsani Das
+
 -Ishika Bandopadhyay
 ## Features
 - One-tap SOS alert
@@ -54,6 +55,7 @@ This follows industry-level secure development practices.
 3. Install dependencies:
    ```bash
    npm install
+
 
 
 
