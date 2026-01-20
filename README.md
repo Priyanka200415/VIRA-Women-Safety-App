@@ -7,6 +7,8 @@ The project focuses on real-life safety situations where immediate help is requi
 -Priyanka Priyadarsani Das
 
 -Ishika Bandopadhyay
+
+-Ipsita Pradhan 
 ## Features
 - One-tap SOS alert
 - Live GPS location sharing
